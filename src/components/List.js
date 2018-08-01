@@ -1,5 +1,7 @@
 import React, { Component } from 'react';
 
+import { Link } from 'react-router';
+
 import pokeapi from '../pokeapi';
 
 class List extends Component {
@@ -22,7 +24,9 @@ class List extends Component {
     render() {
         let pokeList = this.state.list.map( pokemon => {
             return (
-                <li key={pokemon.name}>{pokemon.name}</li>
+                <li key={pokemon.name}>
+                  <Link to={`/details/${pokemon.name}`}> { pokemon.name } </Link>
+                </li>
             );
         });
 
