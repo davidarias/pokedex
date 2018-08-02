@@ -11,7 +11,7 @@ const INITAL_PAGE_COUNT = Math.ceil(INITAL_POKEMON_LIMIT / ITEMS_PER_PAGE );
 
 
 function filterByName(nameFilter, all){
-    let regex = new RegExp(nameFilter);
+    let regex = new RegExp(`^${nameFilter}.*`);
     return all.filter( ( {name} ) => name.match(regex));
 }
 
@@ -33,8 +33,8 @@ class List extends Component {
             filtered: [], // items to show dependeing on page and name filter
             pageCount: 0,
             // page indexing starts at 0
-            initialPage: page - 1,
-            nameFilter: '.*'
+            page: page - 1,
+            nameFilter: (props.params.nameFilter || '')
         };
     }
 
@@ -42,13 +42,17 @@ class List extends Component {
         // get the initial list of pokemon for the app
         pokeapi.getPokemonsList({limit: INITAL_POKEMON_LIMIT, offset: 0})
             .then((response) => {
+
+                let filteredByName = filterByName(this.state.nameFilter, response.results);
+                let pageCount = Math.ceil( filteredByName.length / ITEMS_PER_PAGE );
+
                 this.setState({
                     list: response.results,
                     filtered: filterListForPage(
-                        this.state.initialPage,
-                        response.results
+                        this.state.page,
+                        filteredByName
                     ),
-                    pageCount: INITAL_PAGE_COUNT
+                    pageCount: pageCount
                 });
             }).catch((err) => {
                 console.error("Couldn't load pokemon list from poke api :(");
@@ -64,29 +68,36 @@ class List extends Component {
             filtered: filterListForPage(
                 data.selected,
                 filteredByName
-            )
+            ),
+            page: data.selected
         });
 
         // set url with current page
-        this.props.router.replace(`/list/${data.selected + 1}`);
+        let nextUrl = `/list/${data.selected + 1}`;
+        if (this.state.nameFilter !== '') {
+            nextUrl += `/${this.state.nameFilter}`;
+        }
+        this.props.router.replace(nextUrl);
 
     };
 
     handleNameFilter(event){
         let nameFilter = event.target.value;
-        let nameFilterRegEx = `^${nameFilter}.*`;
 
-        let filteredByName = filterByName(nameFilterRegEx, this.state.list);
+        let filteredByName = filterByName(nameFilter, this.state.list);
         let pageCount = Math.ceil( filteredByName.length / ITEMS_PER_PAGE );
 
         this.setState({
-            nameFilter: nameFilterRegEx,
+            nameFilter: nameFilter,
             pageCount: pageCount,
             filtered: filterListForPage(
                 0,
                 filteredByName
-            )
+            ),
+            page: 0
         });
+
+        this.props.router.replace(`/list/${1}/${nameFilter}`);
     }
 
     render() {
@@ -100,7 +111,7 @@ class List extends Component {
 
         return (
             <div className="pokelist">
-              <input tyep="text" onChange={this.handleNameFilter.bind(this)}/>
+              <input value={this.state.nameFilter} type="text" onChange={this.handleNameFilter.bind(this)}/>
               <div className="list">
                 <ul>{pokeList}</ul>
               </div>
@@ -112,7 +123,7 @@ class List extends Component {
                                pageCount={this.state.pageCount}
                                marginPagesDisplayed={2}
                                pageRangeDisplayed={5}
-                               initialPage={this.state.initialPage}
+                               forcePage={this.state.page}
                                onPageChange={this.handlePageClick.bind(this)}
                                containerClassName={"pagination"}
                                subContainerClassName={"pages pagination"}

@@ -12,9 +12,9 @@ import { Router, Route, hashHistory, IndexRedirect} from 'react-router';
 ReactDOM.render((
   <Router history={hashHistory}>
     <Route path="/" component={App}>
-      <IndexRedirect to="/list" />
+      <IndexRedirect to="/list/1" />
 
-      <Route path="/list(/:page)" component={List}/>
+      <Route path="/list/:page(/:nameFilter)" component={List}/>
       <Route path="/details/:name" component={Details}/>
     </Route>
   </Router>
