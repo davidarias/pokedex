@@ -1,0 +1,224 @@
+html{
+    height: 100%;
+}
+
+body{
+
+    background: #fafafa;
+    color: #222;
+    font-size: 15px;
+    /* font-family: 'Open Sans', sans-serif; */
+    font-family: 'Quattrocento Sans', sans-serif;
+    height: 100%;
+}
+
+
+.container{
+    max-width: 1280px;
+    margin: 0 auto;
+}
+
+.wrap{
+    height: 100%;
+}
+
+header{
+
+    background: #ef5350;
+    border-bottom: 1px solid #eee;
+    text-align: center;
+    padding: 10px;
+
+}
+
+header h1{
+    position: relative;
+    font-size: 40px;
+    color: #f8f8f8;
+    font-family: 'Montserrat Alternates', sans-serif;
+
+}
+
+header small {
+    font-size: 15px;
+    color: #55FF8C;
+    font-weight: bold;
+    font-family: 'Montserrat Alternates', sans-serif;
+}
+
+strong{
+    font-weight: bold;
+}
+
+h1 {
+    font-size: 40px;
+    font-family: 'Montserrat Alternates', sans-serif;
+    color: #000;
+    vertical-align: middle;
+    display: inline;
+}
+
+h2, h3, h4{
+    font-family: 'Montserrat', sans-serif;
+    margin-bottom: 10px;
+}
+
+h2 {
+    font-size: 30px;
+    font-weight: bold;
+}
+
+h3 {
+    font-size: 25px;
+    margin: 5px;
+}
+
+h4{
+    font-size: 20px;
+    margin-bottom: 5px;
+}
+
+p{
+    padding: 5px;
+}
+
+a{
+    /* color: #5B7E99; */
+    color: #28a9e1;
+    text-decoration: none;
+}
+
+.right{
+    text-align: right;
+}
+
+.center{
+    text-align: center;
+}
+
+.inline{
+    display: inline;
+}
+
+a:hover{
+    color: #ef5350;
+}
+
+.inline{
+    display: inline;
+}
+
+.error{
+    color: #E6405A;
+}
+
+.warning{
+    color: #FFD42A;
+}
+
+.ok{
+    color: #1ED760;
+}
+
+.filter label{
+    margin-left: 10px;
+    line-height: 40px;
+    font-size: 20px;
+
+}
+
+.filter{
+    margin-top: 10px;
+}
+
+.filter input{
+    width: 99%;
+}
+
+.list .item{
+    padding: 30px;
+    margin: 10px;
+    border: 1px solid #ccc;
+}
+
+.list .item a{
+    font-size: 25px;
+    line-height: 96px;
+    text-transform: capitalize;
+}
+
+.list .item img, .details img{
+    height: 90px;
+}
+
+.pagination{
+    padding: 20px;
+    font-size: 15px;
+    text-align: center;
+}
+
+.pagination li{
+    display: inline;
+    margin: 5px;
+    padding: 5px;
+    border: 1px solid #ccc;
+}
+
+.pagination li a{
+    padding: 5px 10px;
+}
+
+.pagination li.disabled a{
+    color: #ccc;
+    cursor: default;
+
+}
+
+.pagination li.disabled{
+    border: 1px solid #ccc;
+}
+
+.pagination li.disabled:hover{
+    border: 1px solid #ccc;
+    background: inherit;
+}
+
+.pagination li.active, .pagination li:hover {
+    border: 1px solid #aaa;
+    background: #ccc;
+}
+
+.pagination li a {
+    cursor: pointer;
+}
+
+.details .box{
+    margin-top: 20px;
+    margin-bottom: 20px;
+    border: 1px solid #ccc;
+}
+
+.details h2{
+    color: #666; /* the number of the beast \m/ https://www.youtube.com/watch?v=WxnN05vOuSM */
+    text-transform: capitalize;
+}
+
+.details ul.types, .details ul.evolutions{
+    margin-left: 20px;
+}
+
+.details ul li{
+    padding: 5px;
+}
+
+
+footer{
+    border-top: 1px solid #ddd;
+    background: #eee;
+    padding: 20px;
+}
+
+footer p{
+    padding: 10px;
+    text-align: center;
+}

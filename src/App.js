@@ -1,20 +1,25 @@
 import React, { Component } from 'react';
-import './App.css';
-
-
-
 
 class App extends Component {
 
     render() {
         return (
-            <div className="App">
-              <header className="App-header">
-                <h1 className="App-title">Pokedex</h1>
+            <div className="wrap">
+              <header>
+                <div className="container">
+
+                  <h1>Pokedex</h1><small>beta!</small>
+                </div>
+
               </header>
-              <div className="Container">
+              <div className="container">
                 {this.props.children}
               </div>
+
+              <footer>
+                <p>Made using only high quality bits.</p>
+                <p>Copyright &copy 2018 <a href="http://davidarias.net">David Arias</a>. All rights reserved. </p>
+              </footer>
             </div>
         );
     }
