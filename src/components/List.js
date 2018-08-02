@@ -59,45 +59,41 @@ class List extends Component {
             });;
     }
 
-    handlePageClick(data) {
-        let filteredByName = filterByName(this.state.nameFilter, this.state.list);
+    componentWillReceiveProps(nextProps) {
+        let nameFilter = (nextProps.params.nameFilter || '');
+
+        let filteredByName = filterByName(nameFilter, this.state.list);
         let pageCount = Math.ceil( filteredByName.length / ITEMS_PER_PAGE );
+
+        let page = parseInt(nextProps.params.page, 10) - 1;
+        if (isNaN(page) || page > pageCount) page = 1;
 
         this.setState({
             pageCount: pageCount,
             filtered: filterListForPage(
-                data.selected,
+                page,
                 filteredByName
             ),
-            page: data.selected
+            page: page,
+            nameFilter: nameFilter
         });
+    }
 
+    handlePageClick(data) {
         // set url with current page
         let nextUrl = `/list/${data.selected + 1}`;
         if (this.state.nameFilter !== '') {
             nextUrl += `/${this.state.nameFilter}`;
         }
-        this.props.router.replace(nextUrl);
+
+        this.props.router.push(nextUrl);
 
     };
 
     handleNameFilter(event){
         let nameFilter = event.target.value;
 
-        let filteredByName = filterByName(nameFilter, this.state.list);
-        let pageCount = Math.ceil( filteredByName.length / ITEMS_PER_PAGE );
-
-        this.setState({
-            nameFilter: nameFilter,
-            pageCount: pageCount,
-            filtered: filterListForPage(
-                0,
-                filteredByName
-            ),
-            page: 0
-        });
-
-        this.props.router.replace(`/list/${1}/${nameFilter}`);
+        this.props.router.push(`/list/${1}/${nameFilter}`);
     }
 
     render() {
