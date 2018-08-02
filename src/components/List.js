@@ -7,10 +7,15 @@ import pokeapi from '../pokeapi';
 
 const INITAL_POKEMON_LIMIT = 50;
 const ITEMS_PER_PAGE = 5;
-const PAGE_COUNT = Math.ceil(INITAL_POKEMON_LIMIT / ITEMS_PER_PAGE );
+const INITAL_PAGE_COUNT = Math.ceil(INITAL_POKEMON_LIMIT / ITEMS_PER_PAGE );
 
 
-function filterListForPage(page, nameFilter, all){
+function filterByName(nameFilter, all){
+    let regex = new RegExp(nameFilter);
+    return all.filter( ( {name} ) => name.match(regex));
+}
+
+function filterListForPage(page, all){
     let offset = Math.ceil(page * ITEMS_PER_PAGE);
     return all.slice(offset, offset + ITEMS_PER_PAGE);
 }
@@ -21,7 +26,7 @@ class List extends Component {
         super(props);
 
         let page = parseInt(props.params.page, 10);
-        if (isNaN(page) || page > PAGE_COUNT) page = 1;
+        if (isNaN(page) || page > INITAL_PAGE_COUNT) page = 1;
 
         this.state = {
             list: [], // all items loaded when component mount
@@ -29,7 +34,7 @@ class List extends Component {
             pageCount: 0,
             // page indexing starts at 0
             initialPage: page - 1,
-            nameFilter: '*'
+            nameFilter: '.*'
         };
     }
 
@@ -41,10 +46,9 @@ class List extends Component {
                     list: response.results,
                     filtered: filterListForPage(
                         this.state.initialPage,
-                        this.state.nameFilter,
                         response.results
                     ),
-                    pageCount: PAGE_COUNT
+                    pageCount: INITAL_PAGE_COUNT
                 });
             }).catch((err) => {
                 console.error("Couldn't load pokemon list from poke api :(");
@@ -52,15 +56,38 @@ class List extends Component {
     }
 
     handlePageClick(data) {
-        this.props.router.replace(`/list/${data.selected + 1}`);
+        let filteredByName = filterByName(this.state.nameFilter, this.state.list);
+        let pageCount = Math.ceil( filteredByName.length / ITEMS_PER_PAGE );
+
         this.setState({
+            pageCount: pageCount,
             filtered: filterListForPage(
                 data.selected,
-                this.state.nameFilter,
-                this.state.list
+                filteredByName
             )
         });
+
+        // set url with current page
+        this.props.router.replace(`/list/${data.selected + 1}`);
+
     };
+
+    handleNameFilter(event){
+        let nameFilter = event.target.value;
+        let nameFilterRegEx = `^${nameFilter}.*`;
+
+        let filteredByName = filterByName(nameFilterRegEx, this.state.list);
+        let pageCount = Math.ceil( filteredByName.length / ITEMS_PER_PAGE );
+
+        this.setState({
+            nameFilter: nameFilterRegEx,
+            pageCount: pageCount,
+            filtered: filterListForPage(
+                0,
+                filteredByName
+            )
+        });
+    }
 
     render() {
         let pokeList = this.state.filtered.map( pokemon => {
@@ -73,6 +100,7 @@ class List extends Component {
 
         return (
             <div className="pokelist">
+              <input tyep="text" onChange={this.handleNameFilter.bind(this)}/>
               <div className="list">
                 <ul>{pokeList}</ul>
               </div>
