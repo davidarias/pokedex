@@ -14,7 +14,7 @@ ReactDOM.render((
     <Route path="/" component={App}>
       <IndexRedirect to="/list" />
 
-      <Route path="/list" component={List}/>
+      <Route path="/list(/:page)" component={List}/>
       <Route path="/details/:name" component={Details}/>
     </Route>
   </Router>
