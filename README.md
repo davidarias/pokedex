@@ -29,6 +29,7 @@ npm start   # run deveploment server
 ## FAQ
 
 * **Why no redux?** This is a very simple application, I think that the standard state management from react components is enough in this particular case.
+* **Why no SCSS or less?** The design of the project is simple and minimalist intentionally, so following the "keep it simple" philosophy I thought it was better to just use plain css.
 
 ## License
 
