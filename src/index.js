@@ -1,6 +1,5 @@
 import React from 'react';
 import ReactDOM from 'react-dom';
-import './index.css';
 import App from './App';
 import List from './components/List';
 import Details from './components/Details';
@@ -8,6 +7,11 @@ import Details from './components/Details';
 import registerServiceWorker from './registerServiceWorker';
 
 import { Router, Route, hashHistory, IndexRedirect} from 'react-router';
+
+import './styles/reset.css';
+import './styles/grid.css';
+import './styles/App.css';
+
 
 ReactDOM.render((
   <Router history={hashHistory}>

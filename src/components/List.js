@@ -5,8 +5,10 @@ import ReactPaginate from 'react-paginate';
 
 import pokeapi from '../pokeapi';
 
+import Image from './Image';
+
 const INITAL_POKEMON_LIMIT = 50;
-const ITEMS_PER_PAGE = 5;
+const ITEMS_PER_PAGE = 9;
 const INITAL_PAGE_COUNT = Math.ceil(INITAL_POKEMON_LIMIT / ITEMS_PER_PAGE );
 
 
@@ -99,31 +101,47 @@ class List extends Component {
     render() {
         let pokeList = this.state.filtered.map( pokemon => {
             return (
-                <li key={pokemon.name}>
-                  <Link to={`/details/${pokemon.name}`}> { pokemon.name } </Link>
+                <li className="col-4" key={pokemon.name}>
+                  <div className="item row">
+                    <div className="col-6">
+                      <Image name={pokemon.name} />
+                    </div>
+                    <div className="col-6">
+                      <Link to={`/details/${pokemon.name}`}> { pokemon.name } </Link>
+                    </div>
+                  </div>
                 </li>
             );
         });
 
         return (
             <div className="pokelist">
-              <input value={this.state.nameFilter} type="text" onChange={this.handleNameFilter.bind(this)}/>
-              <div className="list">
+              <div className="filter row">
+                <div className="col-2">
+                  <label>Search by name: </label>
+                </div>
+                <div className="col-10">
+                  <input value={this.state.nameFilter} type="text" onChange={this.handleNameFilter.bind(this)}/>
+                </div>
+              </div>
+              <div className="list row">
                 <ul>{pokeList}</ul>
               </div>
-              <div className="pagination">
-                <ReactPaginate previousLabel={"previous"}
-                               nextLabel={"next"}
-                               breakLabel={<a href="">...</a>}
-                               breakClassName={"break-me"}
-                               pageCount={this.state.pageCount}
-                               marginPagesDisplayed={2}
-                               pageRangeDisplayed={5}
-                               forcePage={this.state.page}
-                               onPageChange={this.handlePageClick.bind(this)}
-                               containerClassName={"pagination"}
-                               subContainerClassName={"pages pagination"}
-                               activeClassName={"active"} />
+              <div className="row">
+                <div className="col-12">
+                  <ReactPaginate previousLabel={"< previous"}
+                                 nextLabel={"next >"}
+                                 breakLabel={"..."}
+                                 breakClassName={"break-me"}
+                                 pageCount={this.state.pageCount}
+                                 marginPagesDisplayed={2}
+                                 pageRangeDisplayed={5}
+                                 forcePage={this.state.page}
+                                 onPageChange={this.handlePageClick.bind(this)}
+                                 containerClassName={"pagination"}
+                                 subContainerClassName={"pages pagination"}
+                                 activeClassName={"active"} />
+                </div>
               </div>
             </div>
         );
