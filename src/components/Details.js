@@ -4,6 +4,8 @@ import pokeapi from '../pokeapi';
 
 import Image from './Image';
 
+import loading from '../img/loading.gif';
+
 
 function makeEvolutionList(chain, list = []){
     // recursive function that creates the evolution list from the nested json
@@ -18,7 +20,7 @@ function makeEvolutionList(chain, list = []){
 
 function Evolutions({evolutionChain}){
     if ( ! evolutionChain ){
-        return (<p>Loading...</p>);
+        return (<img className="evolutions-loading" src={loading} alt="loading"/>);
 
     }else{
         let evolutionsList = makeEvolutionList( evolutionChain.chain );
@@ -31,7 +33,7 @@ function Evolutions({evolutionChain}){
 
 function Info({pokemon, evolutionChain}){
     if ( pokemon.id === null ){
-        return  (<p>Loading...</p>);
+        return (<img src={loading} alt="loading"/>);
     }else{
         let types = pokemon.types.map( type => {
             return (

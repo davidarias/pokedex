@@ -233,6 +233,11 @@ a:hover{
     padding: 5px;
 }
 
+.evolutions-loading{
+    display: block;
+    margin-left: 20px;
+}
+
 
 footer{
     border-top: 1px solid #ddd;
