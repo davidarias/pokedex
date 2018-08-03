@@ -10,33 +10,35 @@ import loading from '../img/loading.gif';
 import typesToColors from '../utils/typesToColors';
 
 
-function makeEvolutionList(chain, list = []){
+function makeEvolutionList(name, chain, list = []){
     // recursive function that creates the evolution list from the nested json
     if ( chain.evolves_to.length > 0){
 
         let from = chain.species.name;
         let to = chain.evolves_to[0].species.name;
 
+        // make curret pokemon resalted in evolution chain
+        if ( from === name ) from = (<span className="current">{from}</span>);
+        if ( to === name ) to = (<span className="current">{to}</span>);
+
         let line = (
             <li key={chain.species.name}>
-              <Link to={`/details/${from}`}> { from } </Link>
-              evolves into
-              <Link to={`/details/${to}`}> { to } </Link>
+              <Link to={`/details/${from}`}>{ from }</Link> evolves into <Link to={`/details/${to}`}>{ to }</Link>
             </li>
         );
         list.push(line);
-        return makeEvolutionList(chain.evolves_to[0], list);
+        return makeEvolutionList(name, chain.evolves_to[0], list);
     }
 
     return list;
 }
 
-function Evolutions({evolutionChain}){
+function Evolutions({name, evolutionChain}){
     if ( ! evolutionChain ){
         return (<img className="evolutions-loading" src={loading} alt="loading"/>);
     }
 
-    let evolutionsList = makeEvolutionList( evolutionChain.chain );
+    let evolutionsList = makeEvolutionList(name, evolutionChain.chain );
 
     return (
         <ul>{evolutionsList}</ul>
@@ -89,12 +91,13 @@ function Info({pokemon, species, evolutionChain}){
 
     );
 
-    let evolutions = <Evolutions evolutionChain={evolutionChain} />;
+    let evolutions = <Evolutions name={pokemon.name} evolutionChain={evolutionChain} />;
 
     return (
         <div className="row">
           <div className="col-3">
             <Image name={pokemon.name} />
+            <Image name={pokemon.name} back={true} />
           </div>
           <div className="col-9">
 

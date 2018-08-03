@@ -251,6 +251,11 @@ a:hover{
     margin-left: 20px;
 }
 
+.current{
+    font-weight: bold;
+    font-size: 17px;
+    text-decoration: underline;
+}
 
 footer{
     border-top: 1px solid #ddd;

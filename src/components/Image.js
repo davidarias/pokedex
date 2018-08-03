@@ -24,12 +24,19 @@ class Image extends Component {
     render() {
         if ( this.state.sprites === null ){
             return (<img src={loading} alt="loading"/>);
-        }else{
-            return (
-                <img src={this.state.sprites.front_default} alt="this.props.params.name" />
-            );
-
         }
+
+        if ( this.props.back === true){
+
+            return (
+                <img src={this.state.sprites.back_default} alt="this.props.params.name back" />
+            );
+        }
+
+        return (
+            <img src={this.state.sprites.front_default} alt="this.props.params.name" />
+        );
+
     }
 }
 
