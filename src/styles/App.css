@@ -10,16 +10,24 @@ body{
     /* font-family: 'Open Sans', sans-serif; */
     font-family: 'Quattrocento Sans', sans-serif;
     height: 100%;
+
 }
 
+.wrap, #root{
+    height: 100%;
+}
+
+.content{
+    min-height: 100%;
+
+}
+.main-content{
+    padding-bottom: 140px;
+}
 
 .container{
     max-width: 1280px;
     margin: 0 auto;
-}
-
-.wrap{
-    height: 100%;
 }
 
 header{
@@ -37,6 +45,15 @@ header h1{
     color: #f8f8f8;
     font-family: 'Montserrat Alternates', sans-serif;
 
+}
+
+header h1 a{
+    color: #f8f8f8;
+}
+
+
+header h1 a:hover{
+    color: #eee;
 }
 
 header small {
@@ -133,12 +150,16 @@ a:hover{
 
 .filter input{
     width: 99%;
+    border: 1px solid #ccc;
+    background: #fff;
+    padding: 10px;
 }
 
 .list .item{
     padding: 30px;
     margin: 10px;
     border: 1px solid #ccc;
+    background: #fff;
 }
 
 .list .item a{
@@ -196,6 +217,7 @@ a:hover{
     margin-top: 20px;
     margin-bottom: 20px;
     border: 1px solid #ccc;
+    background: #fff;
 }
 
 .details h2{
@@ -216,6 +238,8 @@ footer{
     border-top: 1px solid #ddd;
     background: #eee;
     padding: 20px;
+    height: 140px;
+    margin-top: -140px;
 }
 
 footer p{
