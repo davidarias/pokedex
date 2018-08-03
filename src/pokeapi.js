@@ -1,4 +1,4 @@
-import * as Pokedex from 'pokeapi-js-wrapper';
+import * as Pokedex from 'pokeapi-js-wrapper/dist';
 
 const pokeapi = new Pokedex.Pokedex({
     cache: true,
