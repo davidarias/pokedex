@@ -10,9 +10,11 @@ A Pokemon index webapp, made using React and [pokeapi](https://pokeapi.co/)
 * Local cache of resources to comply with the fair use policy of pokeapi ( provided by the library [pokeapi-js-wrapper](https://github.com/PokeAPI/pokeapi-js-wrapper) )
 
 
-## Screenshot
+## Screenshots
 
-![screenshot](https://raw.githubusercontent.com/davidarias/pokedex/master/screeshot.png)
+![screenshot](https://raw.githubusercontent.com/davidarias/pokedex/master/screenshot.png)
+
+![screenshot](https://raw.githubusercontent.com/davidarias/pokedex/master/screenshot_detail.png)
 
 ## Build for production and launch a local server
 
