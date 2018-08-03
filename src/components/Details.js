@@ -1,4 +1,5 @@
 import React, { Component } from 'react';
+import { Link } from 'react-router';
 
 import pokeapi from '../pokeapi';
 
@@ -6,11 +7,23 @@ import Image from './Image';
 
 import loading from '../img/loading.gif';
 
+import typesToColors from '../utils/typesToColors';
+
 
 function makeEvolutionList(chain, list = []){
     // recursive function that creates the evolution list from the nested json
     if ( chain.evolves_to.length > 0){
-        let line = (<li key={chain.species.name}>{chain.species.name} evolves into {chain.evolves_to[0].species.name}</li>);
+
+        let from = chain.species.name;
+        let to = chain.evolves_to[0].species.name;
+
+        let line = (
+            <li key={chain.species.name}>
+              <Link to={`/details/${from}`}> { from } </Link>
+              evolves into
+              <Link to={`/details/${to}`}> { to } </Link>
+            </li>
+        );
         list.push(line);
         return makeEvolutionList(chain.evolves_to[0], list);
     }
@@ -46,9 +59,11 @@ function DetailItem({name, value}){
     return (
         <div className="row">
           <div className="col-3">
-            <strong>
-              {name}
-            </strong>
+            <p>
+              <strong>
+                {name}
+              </strong>
+            </p>
           </div>
           <div className="col-9">
             {value}
@@ -63,13 +78,14 @@ function Info({pokemon, species, evolutionChain}){
     }
 
     let types =(
-        <ul>
+        <p className="types">
           {pokemon.types.map( type => {
               return (
-                  <li key={type.type.name}>{type.type.name}</li>
+                  <span key={type.type.name} style={{background: typesToColors[type.type.name] }}>
+                    {type.type.name} </span>
               );
           })}
-        </ul>
+        </p>
 
     );
 
@@ -83,7 +99,7 @@ function Info({pokemon, species, evolutionChain}){
           <div className="col-9">
 
             <ul>
-              <li><DetailItem name={"ID:"} value={pokemon.id} /></li>
+              <li><DetailItem name={"ID:"} value={<p>{pokemon.id}</p>} /></li>
               <li><DetailItem name={"Description:"} value={FlavoredText({species})} /></li>
               <li><DetailItem name={"Type(s):"} value={types} /></li>
               <li><DetailItem name={"Evolutions:"} value={evolutions} /></li>
@@ -108,9 +124,8 @@ class Details extends Component {
         };
     }
 
-    componentDidMount(){
-        // get the initial list of pokemon for the app
-        pokeapi.getPokemonByName(this.props.params.name).then((response) => {
+    fetchState(props){
+        pokeapi.getPokemonByName(props.params.name).then((response) => {
 
             this.setState({pokemon: response} );
 
@@ -133,6 +148,15 @@ class Details extends Component {
         }).catch((err) => {
             console.error("Couldn't load pokemon list from poke api :(");
         });;
+    }
+
+    componentDidMount(){
+        this.fetchState.call(this, this.props);
+    }
+
+    componentWillReceiveProps(nextProps) {
+
+        this.fetchState.call(this, nextProps);
     }
 
     render() {

@@ -6,8 +6,8 @@ body{
 
     background: #fafafa;
     color: #222;
-    font-size: 15px;
-    /* font-family: 'Open Sans', sans-serif; */
+    font-size: 16px;
+    line-height: 20px;
     font-family: 'Quattrocento Sans', sans-serif;
     height: 100%;
 
@@ -121,10 +121,6 @@ a:hover{
     color: #ef5350;
 }
 
-.inline{
-    display: inline;
-}
-
 .error{
     color: #E6405A;
 }
@@ -225,16 +221,29 @@ a:hover{
     text-transform: capitalize;
 }
 
-.details ul.types, .details ul.evolutions{
-    margin-left: 20px;
-}
+
 
 .details ul li{
-    padding-bottom: 5px;
+    padding: 5px;
 }
 
+.details ul li:nth-child(even) {
+    background: #f8f8f8;
+}
+
+
+.details p.types span{
+    color: #fff;
+    padding: 8px;
+    margin-right: 5px;
+    border-radius: 8px;
+    text-transform: capitalize;
+}
+
+
+
 .details p{
-    padding: 0;
+    padding: 5px;
 }
 
 .evolutions-loading{
