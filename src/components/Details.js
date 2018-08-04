@@ -1,5 +1,6 @@
 import React, { Component } from 'react';
 import { Link } from 'react-router';
+import { Transition, config } from 'react-spring';
 
 import pokeapi from '../pokeapi';
 
@@ -176,16 +177,30 @@ class Details extends Component {
 
         return (
             <div className="details row">
-              <div className="box col-6 pull-3">
-                <div className="row">
-                  <div className="col-12">
-                    <h2>{this.state.pokemon.name}</h2>
-                  </div>
-                </div>
-                <Info pokemon={this.state.pokemon}
-                      species={this.state.species}
-                      evolutionChain={this.state.evolutionChain}/>
-              </div>
+              <Transition config={config.slow}
+                          keys={this.state.pokemon.name}
+                          from={{ opacity: 0, transform: 'scale3d(0.5,0.5,0.5)' }}
+                          enter={{ opacity: 1, transform: 'scale3d(1,1,1)'  }}
+                          leave={{ opacity: 0, transform: 'scale3d(0.5,0.5,0.5)'  }}>
+
+                {style => {
+                    return (
+
+                        <div className="box col-6 pull-3" style={style}>
+                          <div className="row">
+                            <div className="col-12">
+                              <h2>{this.state.pokemon.name}</h2>
+                            </div>
+                          </div>
+                          <Info pokemon={this.state.pokemon}
+                                species={this.state.species}
+                                evolutionChain={this.state.evolutionChain}/>
+                        </div>
+
+                    );
+                }}
+
+              </Transition>
             </div>
 
         );

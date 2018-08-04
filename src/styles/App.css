@@ -219,7 +219,14 @@ a:hover{
     cursor: pointer;
 }
 
+
+.details{
+    position: relative;
+    min-height: 500px;
+}
+
 .details .box{
+    position: absolute;
     margin-top: 20px;
     margin-bottom: 20px;
     border: 1px solid #ccc;
