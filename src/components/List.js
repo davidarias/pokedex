@@ -28,6 +28,12 @@ function filterListForPage(page, all){
 
 
 function PokeList({filtered}){
+
+    if ( filtered === null){
+
+        return (<div className="center"><img src={loading} alt="loading"/> </div>);
+    }
+
     if (filtered.length > 0){
         return  (
             <Transition config={config.slow}
@@ -61,7 +67,7 @@ function PokeList({filtered}){
         );
     }
 
-    return (<div className="center"><img src={loading} alt="loading"/> </div>);
+    return (<div className="center"><h3>No items</h3></div>);
 }
 
 class List extends Component {
@@ -74,7 +80,7 @@ class List extends Component {
 
         this.state = {
             list: [], // all items loaded when component mount
-            filtered: [], // items to show dependeing on page and name filter
+            filtered: null, // items to show dependeing on page and name filter
             pageCount: 0,
             // page indexing starts at 0
             page: page - 1,
