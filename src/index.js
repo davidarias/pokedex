@@ -1,8 +1,10 @@
 import React from 'react';
 import ReactDOM from 'react-dom';
+
 import App from './App';
 import List from './components/List';
 import Details from './components/Details';
+import NotFound from './components/NotFound';
 
 import registerServiceWorker from './registerServiceWorker';
 
@@ -20,6 +22,8 @@ ReactDOM.render((
 
       <Route path="/list/:page(/:nameFilter)" component={List}/>
       <Route path="/details/:name" component={Details}/>
+
+      <Route path='*'exact={true} component={NotFound} />
     </Route>
   </Router>
 ), document.getElementById('root'));
