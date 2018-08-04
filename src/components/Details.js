@@ -124,6 +124,7 @@ class Details extends Component {
             species: null,
             evolutionChain: null,
         };
+
     }
 
     fetchState(props){
@@ -158,6 +159,15 @@ class Details extends Component {
 
     componentWillReceiveProps(nextProps) {
         if ( this.props.params.name !== nextProps.params.name){
+            // reset state so loading images appear when appropiate
+            this.setState({
+                pokemon: {
+                    id: null,
+                    name: nextProps.params.name
+                },
+                species: null,
+                evolutionChain: null
+            });
             this.fetchState.call(this, nextProps);
         }
     }
