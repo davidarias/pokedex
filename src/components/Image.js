@@ -9,25 +9,39 @@ class Image extends Component {
     constructor(props) {
         super(props);
         this.state = { sprites: null };
+        this._mounted = false;
     }
 
     fetchState(props){
         // get the initial list of pokemon for the app
-        pokeapi.getPokemonByName(this.props.name)
+        pokeapi.getPokemonByName(props.name)
             .then((response) => {
-                this.setState({sprites: response.sprites} );
+
+                // This component can be unmounted before the details are
+                // fetched, failing to set state
+                // ( i.e. changing page before loading all images)
+                if ( this._mounted )
+                    this.setState({sprites: response.sprites} );
+
             }).catch((err) => {
                 console.error("Couldn't load pokemon list from poke api :(");
             });;
     }
 
     componentDidMount(){
+        this._mounted = true;
         this.fetchState.call(this, this.props);
     }
 
-    componentWillReceiveProps(nextProps) {
+    componentWillUnmount(){
+        this._mounted = false;
+    }
 
-        this.fetchState.call(this, nextProps);
+    componentWillReceiveProps(nextProps) {
+        if ( nextProps.name !== this.props.name){
+
+            this.fetchState.call(this, nextProps);
+        }
     }
 
     render() {

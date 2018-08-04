@@ -157,8 +157,9 @@ class Details extends Component {
     }
 
     componentWillReceiveProps(nextProps) {
-
-        this.fetchState.call(this, nextProps);
+        if ( this.props.params.name !== nextProps.params.name){
+            this.fetchState.call(this, nextProps);
+        }
     }
 
     render() {

@@ -2,6 +2,9 @@ import React, { Component } from 'react';
 
 import { Link } from 'react-router';
 import ReactPaginate from 'react-paginate';
+import { Transition, config } from 'react-spring';
+
+import hash from 'object-hash';
 
 import pokeapi from '../pokeapi';
 
@@ -27,22 +30,34 @@ function filterListForPage(page, all){
 function PokeList({filtered}){
     if (filtered.length > 0){
         return  (
-            <ul>
-              {filtered.map( pokemon => {
+            <Transition config={config.slow}
+                        keys={hash(filtered)}
+                        from={{transform: 'translateX(500px)', opacity: 0 }}
+                        enter={{ transform: 'translateX(0px)', opacity: 1  }}
+                        leave={{ transform: 'translateX(-500px)', opacity: 0  }}>
+
+              {style => {
                   return (
-                      <li className="col-4" key={pokemon.name}>
-                        <div className="item row">
-                          <div className="col-6">
-                            <Image name={pokemon.name} />
-                          </div>
-                          <div className="col-6">
-                            <Link to={`/details/${pokemon.name}`}> { pokemon.name } </Link>
-                          </div>
-                        </div>
-                      </li>
+                      <ul className="list-items" style={style}>
+                        {filtered.map( pokemon => {
+                            return (
+                                <li className="col-4" key={pokemon.name}>
+                                  <div className="item row">
+                                    <div className="col-6">
+                                      <Image name={pokemon.name} />
+                                    </div>
+                                    <div className="col-6">
+                                      <Link to={`/details/${pokemon.name}`}> { pokemon.name } </Link>
+                                    </div>
+                                  </div>
+                                </li>
+                            );
+                        })}
+                      </ul>
                   );
-              })}
-            </ul>
+              }}
+
+            </Transition>
         );
     }
 
@@ -89,23 +104,27 @@ class List extends Component {
     }
 
     componentWillReceiveProps(nextProps) {
-        let nameFilter = (nextProps.params.nameFilter || '');
+        if ( nextProps.params.nameFilter !== this.props.params.nameFilter ||
+             nextProps.params.page !== this.props.params.page ){
 
-        let filteredByName = filterByName(nameFilter, this.state.list);
-        let pageCount = Math.ceil( filteredByName.length / ITEMS_PER_PAGE );
+            let nameFilter = (nextProps.params.nameFilter || '');
 
-        let page = parseInt(nextProps.params.page, 10) - 1;
-        if (isNaN(page) || page > pageCount) page = 1;
+            let filteredByName = filterByName(nameFilter, this.state.list);
+            let pageCount = Math.ceil( filteredByName.length / ITEMS_PER_PAGE );
 
-        this.setState({
-            pageCount: pageCount,
-            filtered: filterListForPage(
-                page,
-                filteredByName
-            ),
-            page: page,
-            nameFilter: nameFilter
-        });
+            let page = parseInt(nextProps.params.page, 10) - 1;
+            if (isNaN(page) || page > pageCount) page = 1;
+
+            this.setState({
+                pageCount: pageCount,
+                filtered: filterListForPage(
+                    page,
+                    filteredByName
+                ),
+                page: page,
+                nameFilter: nameFilter
+            });
+        }
     }
 
     handlePageClick(data) {

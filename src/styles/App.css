@@ -168,6 +168,16 @@ a:hover{
     height: 90px;
 }
 
+.list{
+    position: relative;
+    min-height: 600px;
+}
+
+.list .list-items{
+    position: absolute;
+    top:0;
+}
+
 .pagination{
     padding: 20px;
     font-size: 15px;
