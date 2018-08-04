@@ -11,7 +11,7 @@ class Image extends Component {
         this.state = { sprites: null };
     }
 
-    componentDidMount(){
+    fetchState(props){
         // get the initial list of pokemon for the app
         pokeapi.getPokemonByName(this.props.name)
             .then((response) => {
@@ -19,6 +19,15 @@ class Image extends Component {
             }).catch((err) => {
                 console.error("Couldn't load pokemon list from poke api :(");
             });;
+    }
+
+    componentDidMount(){
+        this.fetchState.call(this, this.props);
+    }
+
+    componentWillReceiveProps(nextProps) {
+
+        this.fetchState.call(this, nextProps);
     }
 
     render() {
@@ -29,12 +38,12 @@ class Image extends Component {
         if ( this.props.back === true){
 
             return (
-                <img src={this.state.sprites.back_default} alt="this.props.params.name back" />
+                <img src={this.state.sprites.back_default} alt="pokemon back" />
             );
         }
 
         return (
-            <img src={this.state.sprites.front_default} alt="this.props.params.name" />
+            <img src={this.state.sprites.front_default} alt="pokemon" />
         );
 
     }
