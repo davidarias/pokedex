@@ -75,7 +75,7 @@ function DetailItem({name, value}){
 
 function Info({pokemon, species, evolutionChain}){
     if ( pokemon.id === null ){
-        return (<img src={loading} alt="loading"/>);
+        return (<div className="center"><img src={loading} alt="loading"/> </div>);
     }
 
     let types =(
