@@ -6,6 +6,7 @@ import ReactPaginate from 'react-paginate';
 import pokeapi from '../pokeapi';
 
 import Image from './Image';
+import loading from '../img/loading.gif';
 
 const INITAL_POKEMON_LIMIT = 100;
 const ITEMS_PER_PAGE = 9;
@@ -20,6 +21,32 @@ function filterByName(nameFilter, all){
 function filterListForPage(page, all){
     let offset = Math.ceil(page * ITEMS_PER_PAGE);
     return all.slice(offset, offset + ITEMS_PER_PAGE);
+}
+
+
+function PokeList({filtered}){
+    if (filtered.length > 0){
+        return  (
+            <ul>
+              {filtered.map( pokemon => {
+                  return (
+                      <li className="col-4" key={pokemon.name}>
+                        <div className="item row">
+                          <div className="col-6">
+                            <Image name={pokemon.name} />
+                          </div>
+                          <div className="col-6">
+                            <Link to={`/details/${pokemon.name}`}> { pokemon.name } </Link>
+                          </div>
+                        </div>
+                      </li>
+                  );
+              })}
+            </ul>
+        );
+    }
+
+    return (<div className="center"><img src={loading} alt="loading"/> </div>);
 }
 
 class List extends Component {
@@ -99,20 +126,6 @@ class List extends Component {
     }
 
     render() {
-        let pokeList = this.state.filtered.map( pokemon => {
-            return (
-                <li className="col-4" key={pokemon.name}>
-                  <div className="item row">
-                    <div className="col-6">
-                      <Image name={pokemon.name} />
-                    </div>
-                    <div className="col-6">
-                      <Link to={`/details/${pokemon.name}`}> { pokemon.name } </Link>
-                    </div>
-                  </div>
-                </li>
-            );
-        });
 
         return (
             <div className="pokelist">
@@ -125,7 +138,7 @@ class List extends Component {
                 </div>
               </div>
               <div className="list row">
-                <ul>{pokeList}</ul>
+                <PokeList filtered={this.state.filtered} />
               </div>
               <div className="row">
                 <div className="col-12">
