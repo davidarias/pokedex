@@ -17,13 +17,12 @@ function makeEvolutionList(name, chain, list = []){
         let from = chain.species.name;
         let to = chain.evolves_to[0].species.name;
 
-        // make curret pokemon resalted in evolution chain
-        if ( from === name ) from = (<span className="current">{from}</span>);
-        if ( to === name ) to = (<span className="current">{to}</span>);
+        let fromLink = from === name ? <span className="current">{from}</span> : <Link to={`/details/${from}`}>{ from }</Link>;
+        let toLink = to === name ? <span className="current">{to}</span> : <Link to={`/details/${to}`}>{ to }</Link>;
 
         let line = (
             <li key={chain.species.name}>
-              <Link to={`/details/${from}`}>{ from }</Link> evolves into <Link to={`/details/${to}`}>{ to }</Link>
+              {fromLink} evolves into {toLink}
             </li>
         );
         list.push(line);

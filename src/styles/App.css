@@ -241,7 +241,6 @@ a:hover{
 }
 
 
-
 .details p{
     padding: 5px;
 }
@@ -253,8 +252,6 @@ a:hover{
 
 .current{
     font-weight: bold;
-    font-size: 17px;
-    text-decoration: underline;
 }
 
 footer{
