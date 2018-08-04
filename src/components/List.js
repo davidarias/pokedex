@@ -7,7 +7,7 @@ import pokeapi from '../pokeapi';
 
 import Image from './Image';
 
-const INITAL_POKEMON_LIMIT = 50;
+const INITAL_POKEMON_LIMIT = 100;
 const ITEMS_PER_PAGE = 9;
 const INITAL_PAGE_COUNT = Math.ceil(INITAL_POKEMON_LIMIT / ITEMS_PER_PAGE );
 

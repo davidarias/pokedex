@@ -4,10 +4,12 @@ A Pokemon index webapp, made using React and [pokeapi](https://pokeapi.co/)
 
 ## Features
 
-* List up to 50 pokemons
+* Single Page Aplication (No need for backed, just an static web server)
+* List up to 100 pokemons
 * Filter by name
 * Pagination
 * Local cache of resources to comply with the fair use policy of pokeapi ( provided by the library [pokeapi-js-wrapper](https://github.com/PokeAPI/pokeapi-js-wrapper) )
+* Back and forward browser buttons works as expected
 
 
 ## Screenshots
